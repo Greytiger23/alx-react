@@ -1,0 +1,9 @@
+/* modules/header/header.css */
+h1 {
+  text-align: center;
+}
+
+#logo {
+  display: block;
+  margin: 0 auto;
+}
