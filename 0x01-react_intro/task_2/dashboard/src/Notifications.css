@@ -2,4 +2,18 @@
   border: 1px solid #ccc;
   padding: 10px;
   margin: 10px 0;
+  position: relative;
+}
+
+.Notifications ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.Notifications li[data-priority="default"] {
+  color: blue;
+}
+
+.Notifications li[data-priority="urgent"] {
+  color: red:
 }
