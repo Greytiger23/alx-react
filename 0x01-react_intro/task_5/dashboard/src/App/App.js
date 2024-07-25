@@ -1,9 +1,11 @@
 import React from 'react';
+import './App.css';
 
 function App() {
   return (
     <div>
       <header className="App-header">
+        <img src="./assets/logo.png" alt="logo" />
         <h1>School dashboard</h1>
       </header>
       <main className="App-body">
