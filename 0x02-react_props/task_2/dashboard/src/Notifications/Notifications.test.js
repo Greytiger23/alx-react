@@ -1,19 +1,21 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Notifications from './Notifications';
+import NotificationItem from '../Notifications/NotificationItem';
 
 describe('<Notifications />', () => {
   it('renders without crashing', () => {
     shallow(<Notifications />);
   });
 
-  it('renders three list items', () => {
+  it('renders NotificationItem elements', () => {
     const wrapper = shallow(<Notifications />);
-    expect(wrapper.find('li').length).toBe(3);
+    expect(wrapper.find(NotificationItem).length).toBe(3);
   });
 
-  it('renders the text Here is the list of notifications', () => {
+  it('first NotificationItem render the right html', () => {
     const wrapper = shallow(<Notifications />);
-    expect(wrapper.contains(<p>Here is the list of notifications</p>)).toBe(true);
+    const firstItem = wrapper.find(NotificationItem).at(0);
+    expect(firstItem.html()).toContain('New course available');
   });
 });
