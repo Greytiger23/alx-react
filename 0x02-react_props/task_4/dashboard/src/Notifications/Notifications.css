@@ -1,0 +1,9 @@
+.menuItem {
+  cursor: pointer;
+}
+
+.Notifications {
+  border: 1px dashed #e14852;
+  padding: 10px;
+  margin-top: 10px;
+}
