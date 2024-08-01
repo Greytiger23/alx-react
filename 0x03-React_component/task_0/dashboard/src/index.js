@@ -6,6 +6,6 @@ import './index.css';
 ReactDOM.render(
   <React.StrictMode>
     <App />
-  </React.StrctMode>,
+  </React.StrictMode>,
   document.getElementById('root')
 );

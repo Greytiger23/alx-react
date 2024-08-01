@@ -34,7 +34,7 @@ class App extends Component {
         <Notifications displayDrawer={false} listNotifications={listNotifications} />
         <div className="App">
           <Header />
-          {this.props.isLoggedIn ? <CourseList listCourses={listCourses} /> <Login />}
+          {this.props.isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
           <Footer />
         </div>
       </>
