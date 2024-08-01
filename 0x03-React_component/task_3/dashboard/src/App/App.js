@@ -5,7 +5,8 @@ import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
 import Notifications from '../Notifications/Notifications';
-import BodySection from './BodySection/BodySection';
+import BodySection from '../BodySection/BodySection';
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import './App.css';
 
 const listCourses = [
@@ -24,11 +25,15 @@ class App extends Component {
   static propTypes = {
     isLoggedIn: PropTypes.bool,
     logOut: PropTypes.func,
+    listCourses: PropTypes.arrayOf(PropTypes.object),
+    listNotifications: PropTypes.arrayOf(PropTypes.object),
   };
 
   static defaultProps = {
     isLoggedIn: false,
     logOut: () => {},
+    listCourses: [],
+    listNotifications: [],
   };
 
   constructor(props) {
@@ -52,15 +57,26 @@ class App extends Component {
   }
 
   render() {
+    const { isLoggedIn, listCourses, listNotifications } = this.props;
     return (
       <>
         <Notifications displayDrawer={false} listNotifications={listNotifications} />
         <div className="App">
           <Header />
-          {this.props.isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
-          <BodySection title="test">
-            <p>test</p>
-          </BodySection>
+          <div className="App-body">
+            {isLoggedIn ? (
+              <BodySectionWithMarginBottom title="Course list">
+                <CourseList listCourses={listCourses} />
+              </BodySectionWithMarginBottom>
+	    ) : (
+              <BodySectionWithMarginBottom title="Log in to continue">
+                <Login />
+              </BodySectionWithMarginBottom>
+	    )}
+            <BodySection title="News from the School">
+              <p>test</p>
+            </BodySection>
+          </div>
           <Footer />
         </div>
       </>
