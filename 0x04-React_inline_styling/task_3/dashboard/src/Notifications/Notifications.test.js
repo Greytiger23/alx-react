@@ -1,0 +1,92 @@
+import React from 'react';
+import { shallow } from 'enzyme';
+import { StyleSheetTestUtils } from 'aphrodite';
+import Notifications from './Notifications';
+import NotificationItem from './NotificationItem';
+
+describe('Notifications Componenet', () => {
+  it('renders without crashing', () => {
+    shallow(<Notifications />);
+  });
+
+  it('should not re-render if the new listNotifications has fewer or equal items', () => {
+    const initialProps = {
+      displayDrawer: true,
+      listNotifications: [{ id: 1, type: 'default', value: 'test' }]
+    };
+    const wrapper = shallow(<Notifications {...initialProps} />);
+    const shouldUpdateSpy = jest.spyOn(wrapper.instance(), 'shouldComponentUpdate');
+	      
+    const newProps = {
+      displayDrawer: true,
+      listNotifications: [{ id: 1, type: 'default', value: 'test' }]
+    };
+    wrapper.setProps(newProps);
+	      
+    expect(shouldUpdateSpy).toHaveBeenCalled();
+    expect(wrapper.instance().shouldComponentUpdate(newProps)).toBe(false);
+  });
+
+  it('should re-render if the new listNotifications has more items', () => {
+    const initialProps = {
+      displayDrawer: true,
+      listNotifications: [{ id: 1, type: 'default', value: 'test' }]
+    };
+    const wrapper = shallow(<Notifications {...initialProps} />);
+    const shouldUpdateSpy = jest.spyOn(wrapper.instance(), 'shouldComponentUpdate');
+		      
+    const newProps = {
+      displayDrawer: true,
+      listNotifications: [
+        { id: 1, type: 'default', value: 'test' },
+        { id: 2, type: 'urgent', value: 'urgent test' }
+      ]
+    };
+    wrapper.setProps(newProps);
+		      
+    expect(shouldUpdateSpy).toHaveBeenCalled();
+    expect(wrapper.instance().shouldComponentUpdate(newProps)).toBe(true);
+  });
+
+  it('renders correctly if you pass an empty array or if you don’t pass the listNotifications property', () => {
+    let wrapper = shallow(<Notifications />);
+    expect(wrapper.find(NotificationItem).length).toBe(0);
+    expect(wrapper.find('.Notifications p').text()).toEqual('No new notification for now');
+
+    wrapper = shallow(<Notifications listNotifications={[]} />);
+    expect(wrapper.find(NotificationItem).length).toBe(0);
+    expect(wrapper.find('.Notifications p').text()).toEqual('No new notification for now');
+  });
+
+  it('renders the correct number of NotificationItem when passing a list', () => {
+    const listNotifications = [
+      { id: 1, type: 'default', value: 'New course available' },
+      { id: 2, type: 'urgent', value: 'New resume available' },
+      { id: 3, type: 'urgent', html: { __html: '<strong>Urgent requirement</strong> - complete by EOD' } },
+    ];
+    const wrapper = shallow(<Notifications listNotifications={listNotifications} displayDrawer={true} />);
+    expect(wrapper.find(NotificationItem).length).toBe(3);
+  });
+
+  it('does not display "Here is the list of notifications" when listNotifications is empty', () => {
+   const wrapper = shallow(<Notifications listNotifications={[]} displayDrawer={true} />);
+    expect(wrapper.find('.Notifications p').text()).toEqual('No new notification for now');
+  });
+
+  it('calls markAsRead with the correct ID', () => {
+    console.log = jest.fn();
+    const wrapper = shallow(<Notifications displayDrawer={true} listNotifications={[{ id: 1, type: 'default', value: 'New course available' }]} />);
+    const instance = wrapper.instance();
+    instance.markAsRead(1);
+    expect(console.log).toHaveBeenCalledWith('Notification 1 has been marked as read');
+    console.log.mockRestore();
+  });
+});
+
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
