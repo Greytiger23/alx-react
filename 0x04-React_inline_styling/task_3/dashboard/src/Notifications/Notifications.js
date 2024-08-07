@@ -8,11 +8,10 @@ const styles = StyleSheet.create({
     position: 'fixed',
     right: '0',
     top: '0',
-    zIndex: 1000,
+    zIndex: '1000',
     width: '100%',
     height: '100%',
     fontSize: '20px',
-    height: '100%',
     '@media (min-width: 900px)': {
       width: 'auto',
       height: 'auto',
