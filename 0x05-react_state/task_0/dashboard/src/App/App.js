@@ -25,6 +25,7 @@ class App extends Component {
     this.state = {
       displayDrawer: false,
     };
+
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
   }
@@ -46,11 +47,9 @@ class App extends Component {
           handleDisplayDrawer={this.handleDisplayDrawer}
           handleHideDrawer={this.handleHideDrawer}
         />
-        <footer className={css(styles.footer)}>
-          Copyright 2020 - Holberton School
-        </footer>
       </div>
     );
+  }
 }
 
 export default App;
