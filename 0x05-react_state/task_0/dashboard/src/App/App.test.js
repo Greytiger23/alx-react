@@ -73,7 +73,11 @@ describe('<App />', () => {
   });
 
   it('verifies that after calling handleHideDrawer, the stateis false', () => {
-     const wrapper = shallow(<App />);
+    const wrapper = shallow(<App />);
+    wrapper.instance().handleDisplayDrawer();
+    wrapper.instance().handleHideDrawer();
+    expect(wrapper.state().displayDrawer).toBe(false);
+  });
 });
 
 beforeEach(() => {
