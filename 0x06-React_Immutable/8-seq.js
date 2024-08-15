@@ -10,9 +10,3 @@ export function printBestStudents(grades) {
     }));
   console.log(bestStudents.toJS());
 }
-
-const grades = {
-  1: ( score: 99, firstName: 'guillaume', lastName: 'salva' }
-};
-
-printBestStudents(grades);
