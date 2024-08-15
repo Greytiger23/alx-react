@@ -1,7 +1,7 @@
 0x06-React Immutable readme
 
 1. 0-fromjs.js
-create a function getImmutableObject that accepts object as a parameter and converts it into an immutable Map using fromJS of the Immutable.js library.
+Create a function getImmutableObject that accepts object as a parameter and converts it into an immutable Map using fromJS of the Immutable.js library.
 
 2. 1-map.js
 modify the function getImmutableObject using Map from Immutable.js.
