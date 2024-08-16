@@ -8,7 +8,6 @@ export default function printBestStudents(grades) {
       firstName: student.firstName.charAt(0).toUpperCase() + student.firstName.slice(1),
       lastName: student.lastName.charAt(0).toUpperCase() + student.lastName.slice(1),
     }));
-    .toObject();
 
   console.log(students);
 }
