@@ -9,5 +9,5 @@ export default function printBestStudents(grades) {
       lastName: student.lastName.charAt(0).toUpperCase() + student.lastName.slice(1),
     }));
 
-  students.forEach(student => console.log(`${student.firstname} ${student.lastName}`));
+  console.log(students.toJS());
 }
