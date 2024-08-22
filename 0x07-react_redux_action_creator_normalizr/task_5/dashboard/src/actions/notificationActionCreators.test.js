@@ -1,13 +1,13 @@
-import { markAsread, setNotificationFilter } from './notificationActionCreators';
+import { markAsAread, setNotificationFilter } from './notificationActionCreators';
 import { MARK_AS_READ, SET_TYPE_FILTER, NotificationTypeFilters } from './notificationActionTypes';
 
 describe('notificationActionCreators tests', () => {
-  it('should create an action to amrk a notification as read', () => {
+  it('should create an action to mark a notification as read', () => {
     const expectedAction = {
       type: MARK_AS_READ,
       index: 1,
     };
-    expect(marksAsRead(1)).toEqual(expectedAction);
+    expect(marksAsAread(1)).toEqual(expectedAction);
   });
 
   it('should create an action to set the notification filter', () => {
