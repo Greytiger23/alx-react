@@ -1,0 +1,9 @@
+/* src/Footer/Footer.css */
+.App-footer {
+  background-color: #282c34;
+  height: 5vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
