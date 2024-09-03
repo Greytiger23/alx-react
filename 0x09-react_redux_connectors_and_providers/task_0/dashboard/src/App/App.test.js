@@ -1,6 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { StyleSheetTestUtils } from 'aphrodite';
+import { fromJS } from 'immutable';
+import { mapStateToProps } from './App';
 import App from './App';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -109,6 +111,22 @@ describe('<App />', () => {
       { id: 1, value: 'Notification 1' },
       { id: 3, value: 'Notification 3' },
     ]);
+  });
+});
+
+describe('mapStateToProps', () => {
+  it('should return the correct props from state', () => {
+    const state = fromJS({
+      ui: {
+        isUserLoggedIn: true;
+      }
+    });
+
+    const expectedProps = {
+      isLoggedin: true;
+    };
+
+    expect(mapStateToProps(state)).toEqual(expectedProps);
   });
 });
 
