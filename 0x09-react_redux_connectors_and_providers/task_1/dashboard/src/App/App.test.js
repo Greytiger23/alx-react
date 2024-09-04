@@ -2,12 +2,16 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { StyleSheetTestUtils } from 'aphrodite';
 import { fromJS } from 'immutable';
+import { Provider } from 'react-redux';
+import configureStore from 'redux-mock-store';
 import { mapStateToProps } from './App';
 import App from './App';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Login from '../Login/Login';
 import CourseList from '../CourseList/CourseList';
+
+const mockStore = configureStore([]);
 
 describe('<App />', () => {
   it('renders without crashing', () => {
@@ -68,19 +72,6 @@ describe('<App />', () => {
     expect(wrapper.state().displayDrawer).toBe(false);
   });
 
-  it('verifies that after calling handleDisplayDrawer, the state is true', () => {
-    const wrapper = shallow(<App />);
-    wrapper.instance().displayDrawer).toBe(true);
-    expect(wrapper.state().displayDrawer).toBe(true);
-  });
-
-  it('verifies that after calling handleHideDrawer, the stateis false', () => {
-    const wrapper = shallow(<App />);
-    wrapper.instance().handleDisplayDrawer();
-    wrapper.instance().handleHideDrawer();
-    expect(wrapper.state().displayDrawer).toBe(false);
-  });
-
   it('verifies that the logIn function updates the state correctly', () => {
     const wrapper = shallow(<App />);
     wrapper.instance().logIn('test@example.com', 'password');
@@ -127,6 +118,82 @@ describe('mapStateToProps', () => {
     };
 
     expect(mapStateToProps(state)).toEqual(expectedProps);
+  });
+});
+
+describe('App Component', () => {
+  let store;
+
+  beforeEach(() => {
+    store = mockStore({
+      ui: {
+        isLoggedIn: false,
+	isNotificationDrawerVisible: false,
+      },
+    });
+  });
+
+  it('should render without crashing', () => {
+    const wrapper = shallow(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    expect(wrapper.exists()).toBe(true);
+  });
+
+  it('should not display the notification drawer when isNotificationDrawerVisible is false', () => {
+    const wrapper = shallow(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    ).dive().dive(); // Dive into the connected component
+
+    expect(wrapper.find('.notification-drawer').length).toBe(0);
+  });
+
+  it('should display the notification drawer when isNotificationDrawerVisible is true', () => {
+    store = mockStore({
+      ui: {
+        isLoggedIn: true,
+        isNotificationDrawerVisible: true,
+      },
+    });
+
+    const wrapper = shallow(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    ).dive().dive(); // Dive into the connected component
+
+    expect(wrapper.find('.notification-drawer').length).toBe(1);
+  });
+
+  it('should display "Please log in" when the user is not logged in', () => {
+    const wrapper = shallow(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    ).dive().dive(); // Dive into the connected component
+
+    expect(wrapper.find('h1').text()).toBe('Please log in');
+  });
+
+  it('should display "Welcome back!" when the user is logged in', () => {
+    store = mockStore({
+      ui: {
+        isLoggedIn: true,
+        isNotificationDrawerVisible: false,
+      },
+    });
+
+    const wrapper = shallow(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    ).dive().dive(); // Dive into the connected component
+
+    expect(wrapper.find('h1').text()).toBe('Welcome back!');
   });
 });
 
